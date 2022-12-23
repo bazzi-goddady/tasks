@@ -7,33 +7,29 @@ class TasksController < ApplicationController
     render json: Task.find(params[:id])
   end
 
-  def new
-    @task = Task.new
-  end
-
   def create
-    @task = Task.new(task_params)
+    task = Task.new(task_params)
 
-    if @task.save
-      render json: @task
+    if task.save
+      render json: task
     else
-      render json: { message: 'deu erro' }
+      render json: task.errors.full_messages
     end
   end
 
   def update
-    @task = Task.find(params[:id])
+    task = Task.find(params[:id])
 
-    if @task.update(task_params)
-      render json: @task
+    if task.update(task_params)
+      render json: task
     else
-      render json: { message: 'deu erro' }
+      render json: task.errors.full_messages
     end
   end
 
   def destroy
-    @task = Task.find(params[:id])
-    @task.destroy
+    task = Task.find(params[:id])
+    task.destroy
 
     render json: { message: 'Task deleted' }
   end
